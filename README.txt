@@ -1,0 +1,1 @@
+This is the box model for the upcoming minesweeper project. This should accurately mimic how the final will work, while lacking the functionality of the actual game.
