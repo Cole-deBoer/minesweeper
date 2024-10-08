@@ -18,5 +18,4 @@ function CreateTable() {
         body.appendChild(gameTable);
     }
 }
-
 CreateTable();
