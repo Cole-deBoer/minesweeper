@@ -1,3 +1,5 @@
+import Cell from "./Cell";
+
 export default class GenerateTable
 {
     constructor(){
@@ -21,6 +23,7 @@ export default class GenerateTable
                 else {
                     cell.className = "odd-cell";
                 }
+                cell.children = new Cell(thing);
                 gameTable.appendChild(row);
             }
             body.appendChild(gameTable);

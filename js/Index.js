@@ -1,5 +1,5 @@
-import Screen from "/js/GenerateScreen.js";
+import App from "/js/App.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
-    let a = new Screen();
+    let app = new App();
 })
