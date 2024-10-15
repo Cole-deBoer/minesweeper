@@ -3,6 +3,6 @@ export default class App
 {
     constructor()
     {
-        let GameScreen = new GenerateScreen();
+        let GameScreen = new GenerateScreen(15);
     }    
 }
