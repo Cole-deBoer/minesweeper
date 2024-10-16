@@ -44,14 +44,18 @@ ul {
 
 
 .cell {
-    margin: 0px;
-    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 10px;
 }
+
     .cell img {
-        margin: 0px;
-        padding: 0px;
-        width: 20px;
-        height: 20px;
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
     }
 
 main {

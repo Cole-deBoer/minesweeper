@@ -1,48 +1,52 @@
 import CellTypes from "/js/CellTypes.js";
 
+// this is the type that changes at runtime
+let type;
 export default class Cell 
 {
-    constructor(CellType)
+    constructor(cell, cellType)
     {
-        const type = CellType;
-        let imageType;
+        //this is the type that is constant.
+        this.cellType = cellType;
+        type = cellType;
+        this.cell = cell;
     }
 
     CellClicked()
     {
-        console.log("Ive been clicked");
-        if(this.type === CellTypes.Safe)
+        if(type === CellTypes.Flag)
+        {
+            //auido or something
+        }
+        if(type === CellTypes.Safe)
         {
             this.CheckSoroundings();
         }
-        if(this.type === CellTypes.Bomb)
+        if(type === CellTypes.Bomb)
         {
             alert("LOST");
+            location.reload();
         } 
-        if(this.type === CellTypes.Flag)
-        {
-            if(clickEvent.which === 2){
-                this.imageType = "";
-            }
-        }
     }
 
     CellFlagged()
     {
-        if(this.type === CellTypes.Safe)
-            {
-                TouchEvent.imageType = "";
-            }
-            if(this.type === CellTypes.Bomb)
-            {
-                
-            }
-            if(this.type === CellTypes.Flag)
-            {
-                if(clickEvent.which === 2){
-                    this.imageType = CellTypes.Safe;
-                }
-            }
+        let flag = document.createElement('img');
+        flag.src = "/images/Flag.jpg";
+        flag.className = "cell"
+        if(type === 0)
+        {
+            this.cell.removeChild(flag);
+        }
+        if(type === CellTypes.Safe)
+        {
+            type = CellTypes.Safe;
+            this.cell.appendChild(flag);
+        }
+        if(type === CellTypes.Bomb && this.cellType)
+        {
+            console.log(this.cellType);
+        }
     }
 
     CheckSoroundings()
