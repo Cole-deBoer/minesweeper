@@ -85,30 +85,18 @@ export default class Cell {
       if (cell.childNodes[0] == null) {
         const htmlSnippet = `
             <div> soroundings
-            <script type="module">
-                import Cell from "/js/Cell.js";
-                import CellTypes from "/js/CellTypes.js";
-                if('${cell.cellType}' != 1) { 
-                  const cell = new Cell('${cell}', '${this.cellType}');
-                  cell.CheckSoroundings();
-                }
-            </script>
+                <script type="module">
+                    import Cell from "/js/Cell.js";
+                    import CellTypes from "/js/CellTypes.js";
+                    if(true) { 
+                      const cell = new Cell('${cell}', '${this.cellType}');
+                      cell.CheckSoroundings();
+                    }
+                </script>
             </div>
         `;
         this.AppendCodeToElement(cell, htmlSnippet);
       }
-    });
-  }
-
-  AppendCodeToElement(element, code) {
-    element.innerHTML = code;
-    //finds any old code and replaces it with the new code passed
-    Array.from(element.querySelectorAll("script")).forEach((previousCode) => {
-      const newCode = document.createElement("script");
-      Array.from(previousCode.attributes).forEach((attribute) =>
-        newCode.setAttribute(attribute.name, attribute.value));
-      newCode.appendChild(document.createTextNode(previousCode.innerHTML));
-      previousCode.parentNode.replaceChild(newCode, previousCode);
     });
   }
 }

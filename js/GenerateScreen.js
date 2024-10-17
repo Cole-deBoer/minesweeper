@@ -18,8 +18,6 @@ export default class GenerateTable {
       for (let j = 0; j < this.tableSize; j++) {
         const cell = row.insertCell();
 
-        //cell.setAttribute("data-row", `${i}`); use this method if youre going to refactor (unlikely)
-
         //determines which cells should be dark, and which ones should be bright to create checkerboard pattern.
         cell.style.backgroundColor = (i + j) % 2 === 0 ? "green" : "lightGreen";
         cell.className = "cell";
@@ -41,13 +39,8 @@ export default class GenerateTable {
       if (bombs.includes(cell)) continue; // prevents multiple bombs from being placed on same cell.
       bombs.push(cell);
       const CellInstance = new Cell(cell, CellTypes.Bomb);
+      this.AppendCellClassToTableCell(cell, CellInstance);
       cell.style.backgroundColor = "grey";
-      cell.addEventListener("click", () => {
-        CellInstance.CellClicked();
-      });
-      cell.addEventListener("contextmenu", () => {
-        CellInstance.CellFlagged();
-      });
     }
 
     //creates safe cells
@@ -56,13 +49,39 @@ export default class GenerateTable {
         const cell = table.rows[i].cells[j];
         if (bombs.includes(cell)) continue;
         const CellInstance = new Cell(cell, CellTypes.Safe);
-        cell.addEventListener("click", () => {
-          CellInstance.CellClicked();
-        });
-        cell.addEventListener("contextmenu", () => {
-          CellInstance.CellFlagged();
-        });
+        this.AppendCellClassToTableCell(cell, CellInstance);
       }
     }
+  }
+
+  //make it part of a util class or something cleaner
+  AppendCellClassToTableCell(element, cell) {
+    const htmlSnippet = `
+            <div class="cell"> 
+                <script type="module">
+                    import Cell from "/js/Cell.js";
+                    import CellTypes from "/js/CellTypes.js";
+                    '${element.addEventListener("click", () => {
+                        cell.CellClicked();
+                    })};'
+
+                    '${element.addEventListener("contextmenu", () => {
+                        cell.CellFlagged();
+                    })};'
+                    
+                </script>
+            </div>
+        `;
+
+    element.innerHTML = htmlSnippet;
+    //finds any old code and replaces it with the new code passed
+    Array.from(element.querySelectorAll("script")).forEach((previousCode) => {
+      const newCode = document.createElement("script");
+      Array.from(previousCode.attributes).forEach((attribute) =>
+        newCode.setAttribute(attribute.name, attribute.value)
+      );
+      newCode.appendChild(document.createTextNode(previousCode.innerHTML));
+      previousCode.parentNode.replaceChild(newCode, previousCode);
+    });
   }
 }
