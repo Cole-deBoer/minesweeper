@@ -1,7 +1,6 @@
-const CellTypes ={
-    Flag: 0,
-    Safe: 1,
-    Bomb: 2
+const CellTypes = {
+  Safe: 0,
+  Bomb: 1,
 };
 
 const type = CellTypes;
